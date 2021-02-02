@@ -12,9 +12,7 @@ public class Book {
     /**
      * Default constructor for creating a Book object.
      */
-    public Book() {
-
-    }
+    public Book() { }
 
     /**
      * Constructor for creating a Book object.
@@ -51,8 +49,8 @@ public class Book {
      */
     @Override
     public String toString() {
-        String availability = (checkedOut) ? "is available." : "is not available.";
-        return "Book#" + number + "::" + name + "::" + datePublished + availability;
+        String availability = (checkedOut) ? "is not available." : "is available.";
+        return "Book#" + number + "::" + name + "::" + datePublished.toString() + " " + availability;
     }
 
     /**

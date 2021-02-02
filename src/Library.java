@@ -2,6 +2,8 @@ public class Library {
     private Book[] books; // array-based implementation of the bag data structure
     private int numBooks; // the number of books currently in the bag
 
+    private static String serialNumber = "10000";
+
     /**
      * Default constructor to create an empty bag.
      */
@@ -16,7 +18,7 @@ public class Library {
      */
     private int find(Book book) {
         // linear search through bag to find equivalent book's index
-        for (int i = 0; i < books.length; i++) {
+        for (int i = 0; i < numBooks; i++) {
             if (books[i].equals(book)) {
                 return i;
             }
@@ -36,6 +38,14 @@ public class Library {
     }
 
     /**
+     * Getter method to get the number of books in the library
+     * @return
+     */
+    public int getNumBooks() {
+        return numBooks;
+    }
+
+    /**
      * Adds a new book to the books array.
      * If the books array is full, grow will be called to increase the array capacity by 4.
      * @param book new book to be added
@@ -45,6 +55,7 @@ public class Library {
             grow();
         }
         books[numBooks] = book;
+        numBooks++;
     }
 
     /**
@@ -105,9 +116,9 @@ public class Library {
     /**
      * Print the list of books in the bag according to current sequence.
      */
-    public void print() {
-        for (Book book: books) {
-            System.out.println(book.toString());
+    public void printStandard() {
+        for (int i = 0; i < numBooks; i++) {
+            System.out.println(books[i].toString());
         }
     }
 
@@ -125,7 +136,7 @@ public class Library {
                 }
             }
         }
-        print();
+        printStandard();
     }
 
     /**
@@ -134,14 +145,35 @@ public class Library {
     public void printByNumber() {
         for (int i = 0; i < books.length; i++) {
             for (int j = 1; j < books.length - i; j++) {
-                //Check if Book at index i is published before Book at index j
-                if (books[j-1].getNumber().compareTo(books[j].getNumber()) < 0) {
+                // Check if Book at index i is published before Book at index j
+                if (books[j-1].getNumber().compareTo(books[j].getNumber()) > 0) {
                     Book temp = books[j-1];
                     books[j-1] = books[j];
                     books[j] = temp;
                 }
             }
         }
-        print();
+        printStandard();
+    }
+
+    public Book getBookData(String serialNumber) {
+        // linear search through bag to find equivalent book's index
+        for (int i = 0; i < books.length; i++) {
+            if (books[i].getNumber().equals(serialNumber)) {
+                return books[i];
+            }
+        }
+
+        return new Book();
+    }
+
+    /**
+     * Getter for the current serial number the library is assigning
+     * @return current serial number as a String
+     */
+    public static String getSerialNumber() {
+        // convert serialNumber String to int, add 1, and convert back to int
+        serialNumber = String.valueOf(Integer.parseInt(serialNumber) + 1);
+        return serialNumber;
     }
 }
